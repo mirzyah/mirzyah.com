@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MIRZYAH</title>
+  <meta name="description" content="We are just the inn." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Poppins:wght@300&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --black: #080808;
+      --gold: #A8874A;
+      --white: #FFFFFF;
+    }
+
+    html, body {
+      height: 100%;
+      overflow: hidden;
+      background-color: var(--black);
+      color: var(--white);
+      font-family: 'Poppins', sans-serif;
+      font-weight: 300;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* Fade in entire page */
+    body {
+      animation: fadeIn 0.8s ease forwards;
+      opacity: 0;
+    }
+
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+
+    /* ── NAVIGATION ── */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 28px 48px;
+    }
+
+    .nav-star {
+      font-size: 14px;
+      color: #A8874A;
+      user-select: none;
+      line-height: 1;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 40px;
+      list-style: none;
+    }
+
+    .nav-links li {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 300;
+      font-size: 11px;
+      letter-spacing: 0.28em;
+      color: rgba(255, 255, 255, 0.38);
+      text-transform: uppercase;
+      cursor: default;
+      user-select: none;
+      transition: none;
+      position: relative;
+    }
+
+    .nav-links li:hover {
+      color: rgba(255, 255, 255, 0.68);
+    }
+
+    .nav-links li .nav-label-default {
+      display: inline;
+    }
+
+    .nav-links li .nav-label-hover {
+      display: none;
+    }
+
+    .nav-links li:hover .nav-label-default {
+      display: none;
+    }
+
+    .nav-links li:hover .nav-label-hover {
+      display: inline;
+    }
+
+    /* ── HERO ── */
+    main {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 0 24px;
+    }
+
+    .logo-mark {
+      width: 110px;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+    }
+
+    .wordmark {
+      margin-top: 28px;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 300;
+      font-size: 28px;
+      letter-spacing: 0.55em;
+      color: rgba(255, 255, 255, 1.0);
+      text-transform: uppercase;
+      /* Compensate for letter-spacing on last character */
+      text-indent: 0.55em;
+    }
+
+    .divider {
+      margin: 52px auto;
+      width: 1px;
+      height: 40px;
+      background-color: rgba(255, 255, 255, 0.14);
+    }
+
+    .cta-label {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 300;
+      font-size: 10px;
+      letter-spacing: 0.32em;
+      color: rgba(255, 255, 255, 0.28);
+      text-transform: uppercase;
+      text-indent: 0.32em;
+      margin-bottom: 10px;
+    }
+
+    .cta-email {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 300;
+      font-size: 12px;
+      letter-spacing: 0.18em;
+      color: rgba(255, 255, 255, 0.68);
+      text-decoration: none;
+      text-transform: lowercase;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.2s ease, color 0.2s ease;
+    }
+
+    .cta-email:hover {
+      color: rgba(255, 255, 255, 0.90);
+      border-bottom-color: rgba(255, 255, 255, 0.28);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      text-align: center;
+      padding: 0 0 28px 0;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 300;
+      font-size: 9px;
+      letter-spacing: 0.28em;
+      color: rgba(255, 255, 255, 0.22);
+      text-transform: uppercase;
+      text-indent: 0.28em;
+      user-select: none;
+    }
+
+    /* ── MOBILE ── */
+    @media (max-width: 640px) {
+      nav {
+        padding: 22px 24px;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .logo-mark {
+        width: 76px;
+      }
+
+      .wordmark {
+        font-size: 20px;
+        letter-spacing: 0.45em;
+        text-indent: 0.45em;
+        margin-top: 22px;
+      }
+
+      .sub-wordmark {
+        font-size: 11px;
+      }
+
+      .divider {
+        margin: 40px auto;
+      }
+    }
+
+    /* Reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      body {
+        animation: none;
+        opacity: 1;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVIGATION -->
+  <nav>
+    <span class="nav-star">✦</span>
+    <ul class="nav-links">
+      <li>
+        <span class="nav-label-default">About</span>
+        <span class="nav-label-hover">Locked</span>
+      </li>
+      <li>
+        <span class="nav-label-default">The Vault</span>
+        <span class="nav-label-hover">Locked</span>
+      </li>
+      <li>
+        <span class="nav-label-default">Isnad</span>
+        <span class="nav-label-hover">Locked</span>
+      </li>
+      <li>
+        <span class="nav-label-default">Gear</span>
+        <span class="nav-label-hover">Locked</span>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <main>
+
+    <!-- Crescented M — SVG reconstructed from profile picture -->
+    <svg
+      class="logo-mark"
+      viewBox="0 0 200 200"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-label="Mirzyah Crescented M mark"
+      role="img"
+    >
+      <!-- Crescent: thick arc opening to the right -->
+      <path
+        d="
+          M 100 18
+          A 82 82 0 1 0 100 182
+          A 58 70 0 1 1 100 18
+          Z
+        "
+        fill="#A8874A"
+      />
+      <!-- M letterform — serif capital, centered in crescent negative space -->
+      <text
+        x="108"
+        y="126"
+        text-anchor="middle"
+        font-family="Georgia, 'Times New Roman', serif"
+        font-size="72"
+        font-weight="400"
+        fill="#A8874A"
+        letter-spacing="0"
+      >M</text>
+    </svg>
+
+    <p class="wordmark">Mirzyah</p>
+
+    <div class="divider"></div>
+
+    <p class="cta-label">Write to us</p>
+    <a class="cta-email" href="mailto:archive@mirzyah.com">archive@mirzyah.com</a>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    ✦ &nbsp;·&nbsp; Ontario, Canada &nbsp;·&nbsp; Est. 2026 &nbsp;·&nbsp; mirzyah.com
+  </footer>
+
+</body>
+</html>
