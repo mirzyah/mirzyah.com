@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About — MIRZYAH</title>
+  <meta name="description" content="This is not a story. It is a record." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Poppins:wght@300&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --black: #080808;
+      --gold: #A8874A;
+      --white: #FFFFFF;
+    }
+
+    html, body {
+      min-height: 100%;
+      background-color: var(--black);
+      color: var(--white);
+      font-family: 'Poppins', sans-serif;
+      font-weight: 300;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
+    }
+
+    body {
+      animation: fadeIn 1.2s ease forwards;
+      opacity: 0;
+    }
+
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+
+    /* ── NAVIGATION ── */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 28px 48px;
+    }
+
+    .nav-star {
+      font-size: 14px;
+      color: #A8874A;
+      user-select: none;
+      line-height: 1;
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 40px;
+      list-style: none;
+    }
+
+    .nav-links li {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 300;
+      font-size: 11px;
+      letter-spacing: 0.28em;
+      color: rgba(255, 255, 255, 0.38);
+      text-transform: uppercase;
+      cursor: default;
+      user-select: none;
+      position: relative;
+    }
+
+    .nav-links li.active {
+      color: rgba(255, 255, 255, 0.75);
+    }
+
+    .nav-links li a {
+      color: inherit;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .nav-links li:not(.active):hover {
+      color: rgba(255, 255, 255, 0.68);
+    }
+
+    .nav-links li .nav-label-default { display: inline; }
+    .nav-links li .nav-label-hover { display: none; }
+    .nav-links li:not(.active):hover .nav-label-default { display: none; }
+    .nav-links li:not(.active):hover .nav-label-hover { display: inline; }
+
+    /* ── MAIN CONTENT ── */
+    main {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 120px 48px 100px;
+      max-width: 680px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    /* Opening line */
+    .about-eyebrow {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 300;
+      font-size: 10px;
+      letter-spacing: 0.4em;
+      color: rgba(255, 255, 255, 0.28);
+      text-transform: uppercase;
+      text-indent: 0.4em;
+      margin-bottom: 64px;
+    }
+
+    /* Primary statement */
+    .about-primary {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-style: italic;
+      font-size: 32px;
+      line-height: 1.6;
+      color: rgba(255, 255, 255, 0.92);
+      margin-bottom: 64px;
+      letter-spacing: 0.02em;
+    }
+
+    /* Gold rule divider */
+    .about-rule {
+      width: 1px;
+      height: 48px;
+      background-color: rgba(168, 135, 74, 0.4);
+      margin: 0 auto 64px;
+    }
+
+    /* Body paragraphs */
+    .about-body {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: 18px;
+      line-height: 2;
+      color: rgba(255, 255, 255, 0.55);
+      margin-bottom: 48px;
+      letter-spacing: 0.01em;
+    }
+
+    .about-body + .about-body {
+      margin-top: 0;
+    }
+
+    /* Pause — empty space between thoughts */
+    .about-pause {
+      height: 48px;
+    }
+
+    /* Closing statement */
+    .about-closing {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 400;
+      font-style: italic;
+      font-size: 20px;
+      line-height: 1.8;
+      color: rgba(255, 255, 255, 0.75);
+      margin-top: 16px;
+      letter-spacing: 0.02em;
+    }
+
+    /* Sign-off */
+    .about-signoff {
+      margin-top: 72px;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 300;
+      font-size: 11px;
+      letter-spacing: 0.45em;
+      color: rgba(168, 135, 74, 0.7);
+      text-transform: uppercase;
+      text-indent: 0.45em;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      text-align: center;
+      padding: 0 0 28px 0;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 300;
+      font-size: 9px;
+      letter-spacing: 0.28em;
+      color: rgba(255, 255, 255, 0.22);
+      text-transform: uppercase;
+      text-indent: 0.28em;
+      user-select: none;
+      background: linear-gradient(to top, rgba(8,8,8,1) 60%, rgba(8,8,8,0));
+      padding-top: 32px;
+    }
+
+    /* ── MOBILE ── */
+    @media (max-width: 640px) {
+      nav {
+        padding: 22px 24px;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 18px;
+      }
+
+      .nav-links li {
+        font-size: 9px;
+        letter-spacing: 0.18em;
+      }
+
+      main {
+        padding: 100px 32px 100px;
+      }
+
+      .about-primary {
+        font-size: 24px;
+      }
+
+      .about-body {
+        font-size: 16px;
+      }
+
+      .about-closing {
+        font-size: 17px;
+      }
+    }
+
+    /* Reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      body {
+        animation: none;
+        opacity: 1;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVIGATION -->
+  <nav>
+    <a href="index.html" class="nav-star">✦</a>
+    <ul class="nav-links">
+      <li class="active">
+        <span class="nav-label-default">About</span>
+      </li>
+      <li>
+        <span class="nav-label-default">The Vault</span>
+        <span class="nav-label-hover">Locked</span>
+      </li>
+      <li>
+        <span class="nav-label-default">Isnad</span>
+        <span class="nav-label-hover">Locked</span>
+      </li>
+      <li>
+        <span class="nav-label-default">Gear</span>
+        <span class="nav-label-hover">Locked</span>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- ABOUT CONTENT -->
+  <main>
+
+    <p class="about-eyebrow">About</p>
+
+    <p class="about-primary">
+      This is not a brand.<br>
+      This is a record.
+    </p>
+
+    <div class="about-rule"></div>
+
+    <p class="about-body">
+      Most things are made to be forgotten.<br>
+      Worn once. Replaced. Left behind without ceremony.
+    </p>
+
+    <div class="about-pause"></div>
+
+    <p class="about-body">
+      Mirzyah was built on a different premise.<br>
+      That what you carry says something about who you are.<br>
+      That ownership is not a transaction — it is a beginning.
+    </p>
+
+    <div class="about-pause"></div>
+
+    <p class="about-body">
+      Every piece made here has a birth record.<br>
+      A history. A name attached to it.<br>
+      Yours, then whoever comes after you.
+    </p>
+
+    <div class="about-pause"></div>
+
+    <p class="about-body">
+      We do not make things for everyone.<br>
+      We make things for the person who understands<br>
+      that tension and balance are the same force<br>
+      moving in opposite directions.
+    </p>
+
+    <div class="about-rule" style="margin-top: 16px;"></div>
+
+    <p class="about-closing">
+      The rest is not ready to be seen yet.<br>
+      But the door is open.<br>
+      You found it.
+    </p>
+
+    <p class="about-signoff">Mirzyah</p>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    ✦ &nbsp;·&nbsp; Ontario, Canada &nbsp;·&nbsp; Est. 2026 &nbsp;·&nbsp; mirzyah.com
+  </footer>
+
+</body>
+</html>
