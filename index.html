@@ -56,12 +56,52 @@
       padding: 28px 48px;
     }
 
+    /* Left cluster — star + the Guest's future entrance, held apart from the
+       locked rooms on the right. */
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 26px;
+    }
+
     .nav-star {
       font-size: 14px;
       color: #A8874A;
       user-select: none;
       line-height: 1;
     }
+
+    /* Begin Heritage — same nav theme, but hover says "Not Yet", not "Locked". */
+    .nav-heritage {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 300;
+      font-size: 11px;
+      letter-spacing: 0.22em;
+      color: rgba(255, 255, 255, 0.55);
+      text-transform: uppercase;
+      cursor: default;
+      user-select: none;
+      position: relative;
+      white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 180px;
+      padding: 8px 16px;
+      text-indent: 0.22em;
+      border: 1px solid rgba(168, 135, 74, 0.45);
+      transition: border-color 0.25s ease, color 0.25s ease;
+    }
+
+    .nav-heritage:hover {
+      color: rgba(255, 255, 255, 0.80);
+      border-color: rgba(168, 135, 74, 0.78);
+    }
+
+    .nav-heritage .nav-label-default { display: inline; }
+    .nav-heritage .nav-label-hover { display: none; }
+    .nav-heritage:hover .nav-label-default { display: none; }
+    .nav-heritage:hover .nav-label-hover { display: inline; }
 
     .nav-links {
       display: flex;
@@ -169,7 +209,7 @@
       font-weight: 300;
       font-size: 10px;
       letter-spacing: 0.32em;
-      color: rgba(255, 255, 255, 0.28);
+      color: rgba(255, 255, 255, 0.42);
       text-transform: uppercase;
       text-indent: 0.32em;
       margin-bottom: 10px;
@@ -216,9 +256,21 @@
         padding: 22px 24px;
       }
 
+      .nav-left {
+        gap: 16px;
+      }
+
+      .nav-heritage {
+        font-size: 8px;
+        letter-spacing: 0.12em;
+        min-width: 120px;
+        padding: 6px 12px;
+        text-indent: 0.12em;
+      }
+
       .nav-links {
         display: flex;
-        gap: 18px;
+        gap: 16px;
       }
 
       .nav-links li {
@@ -261,7 +313,13 @@
 
   <!-- NAVIGATION -->
   <nav>
-    <span class="nav-star">✦</span>
+    <div class="nav-left">
+      <span class="nav-star">✦</span>
+      <span class="nav-heritage">
+        <span class="nav-label-default">Begin Heritage</span>
+        <span class="nav-label-hover">Not Yet</span>
+      </span>
+    </div>
     <ul class="nav-links">
       <li class="nav-link">
         <a href="about.html">About</a>
