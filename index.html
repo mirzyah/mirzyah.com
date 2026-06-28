@@ -130,6 +130,21 @@
       margin: 0 auto;
     }
 
+    /* ── CRESCENT MOON ──
+       The occluder is a black disk over the gold disk; where it covers, the
+       disk reads as page background, carving the crescent. At rest it leaves
+       a thin ~14px sliver matching the original. On hover it slides right only
+       slightly, so the crescent thickens a touch without the gold climbing up
+       toward the horns. The M always stays on shadow. */
+    .moon-occluder {
+      transform: translateX(14px);
+      transition: transform 1.8s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .logo-mark:hover .moon-occluder {
+      transform: translateX(24px);
+    }
+
     .wordmark {
       margin-top: 28px;
       font-family: 'Poppins', sans-serif;
@@ -227,11 +242,17 @@
       }
     }
 
-    /* Reduced motion */
+    /* Reduced motion — hold a static thin crescent, no waxing on hover */
     @media (prefers-reduced-motion: reduce) {
       body {
         animation: none;
         opacity: 1;
+      }
+      .moon-occluder {
+        transition: none;
+      }
+      .logo-mark:hover .moon-occluder {
+        transform: translateX(14px);
       }
     }
   </style>
@@ -263,35 +284,71 @@
   <!-- HERO -->
   <main>
 
-    <!-- Crescented M — SVG reconstructed from profile picture -->
+    <!-- Crescented M — disk + occluder construction.
+         Hover wakes the moon: the lit body thickens slightly, and a single
+         sparkle rises up the open right side, from bottom-right to top.
+         The sparkle plays through once and cannot restart until it finishes. -->
     <svg
+      id="logoMark"
       class="logo-mark"
       viewBox="0 0 200 200"
       xmlns="http://www.w3.org/2000/svg"
       aria-label="Mirzyah Crescented M mark"
       role="img"
     >
-      <!-- Crescent: thick arc opening to the right -->
-      <path
-        d="
-          M 100 18
-          A 82 82 0 1 0 100 182
-          A 58 70 0 1 1 100 18
-          Z
-        "
-        fill="#A8874A"
-      />
-      <!-- M letterform — serif capital, centered in crescent negative space -->
+      <!-- The lit disk -->
+      <circle cx="100" cy="100" r="82" fill="#A8874A" />
+
+      <!-- The occluder — page-black disk that carves the crescent.
+           Slides right on hover to wax the moon slightly. -->
+      <g class="moon-occluder">
+        <circle cx="100" cy="100" r="82" fill="#080808" />
+      </g>
+
+      <!-- M letterform — always gold, always in front, seated in the opening -->
       <text
-        x="108"
-        y="126"
+        x="116"
+        y="128"
         text-anchor="middle"
         font-family="Georgia, 'Times New Roman', serif"
-        font-size="72"
+        font-size="78"
         font-weight="400"
         fill="#A8874A"
         letter-spacing="0"
       >M</text>
+
+      <!-- Sparkle. animateMotion carries its centre from the bottom-right of
+           the moon, out toward the right rim, up to the top — on the dark side,
+           right of the M, the whole way. restart="whenNotActive" locks it: once
+           it is running, re-hovering will not restart it until it completes. -->
+      <path
+        d="M0,-9 L1.9,-1.9 L9,0 L1.9,1.9 L0,9 L-1.9,1.9 L-9,0 L-1.9,-1.9 Z"
+        fill="#A8874A"
+        opacity="0"
+      >
+        <animateMotion
+          begin="hit.mouseover"
+          dur="1.8s"
+          fill="remove"
+          restart="whenNotActive"
+          rotate="0"
+          calcMode="spline"
+          keyTimes="0;1"
+          keySplines="0.4 0 0.2 1"
+          path="M148,172 C180,150 180,50 148,28" />
+        <animate
+          attributeName="opacity"
+          begin="hit.mouseover"
+          dur="1.8s"
+          values="0;1;1;0"
+          keyTimes="0;0.18;0.72;1"
+          fill="remove"
+          restart="whenNotActive" />
+      </path>
+
+      <!-- Single transparent hit target so hover fires once on enter,
+           not repeatedly as the cursor crosses sub-elements. -->
+      <rect id="hit" x="0" y="0" width="200" height="200" fill="none" pointer-events="all" />
     </svg>
 
     <p class="wordmark">Mirzyah</p>
