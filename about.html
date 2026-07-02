@@ -5,6 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>About — MIRZYAH</title>
   <meta name="description" content="This is not a story. It is a record." />
+  <meta name="theme-color" content="#080808" />
+  <meta property="og:title" content="MIRZYAH — About" />
+  <meta property="og:description" content="This is not a story. It is a record." />
+  <meta property="og:url" content="https://mirzyah.com/about.html" />
+  <meta property="og:type" content="website" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Crect width='200' height='200' fill='%23080808'/%3E%3Ccircle cx='100' cy='100' r='82' fill='%23A8874A'/%3E%3Ccircle cx='114' cy='100' r='82' fill='%23080808'/%3E%3Ctext x='116' y='128' text-anchor='middle' font-family='Georgia,serif' font-size='78' fill='%23A8874A'%3EM%3C/text%3E%3C/svg%3E" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Poppins:wght@300&display=swap" rel="stylesheet" />
@@ -42,6 +48,18 @@
       to { opacity: 1; }
     }
 
+    /* Even the act of selecting text belongs to the House. */
+    ::selection {
+      background-color: rgba(168, 135, 74, 0.85);
+      color: #080808;
+    }
+
+    /* Keyboard Guests are Guests. The focus ring is the House gold. */
+    a:focus-visible {
+      outline: 1px solid rgba(168, 135, 74, 0.65);
+      outline-offset: 4px;
+    }
+
     /* ── NAVIGATION ── */
     nav {
       position: fixed;
@@ -53,6 +71,35 @@
       align-items: center;
       justify-content: space-between;
       padding: 28px 48px;
+      /* Same plane as the entrance — scrim above, gold hairline below,
+         warming when attention arrives. One House, one nav. */
+      background: linear-gradient(to bottom, rgba(8, 8, 8, 0.92), rgba(8, 8, 8, 0));
+    }
+
+    nav::after {
+      content: '';
+      position: absolute;
+      left: 48px;
+      right: 48px;
+      bottom: 0;
+      height: 1px;
+      background: linear-gradient(to right, transparent, rgba(168, 135, 74, 0.32), transparent);
+      opacity: 0.4;
+      transition: opacity 0.6s ease;
+    }
+
+    nav:hover::after {
+      opacity: 0.9;
+    }
+
+    @keyframes navIn {
+      from { opacity: 0; transform: translateY(-6px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes navInStar {
+      from { opacity: 0; }
+      to   { opacity: 0.85; }
     }
 
     /* Left cluster — star (links home) + the Guest's future entrance. */
@@ -68,6 +115,69 @@
       user-select: none;
       line-height: 1;
       text-decoration: none;
+      display: inline-block;
+      opacity: 0;
+      animation: navInStar 0.8s ease forwards 0.15s,
+                 starGlint 11s ease-in-out infinite 6s;
+      transition: filter 0.3s ease;
+    }
+
+    /* The star is the way back. On approach, it answers with light —
+       filter, not transform, so the glint keeps its own rhythm. */
+    .nav-star:hover {
+      filter: drop-shadow(0 0 6px rgba(168, 135, 74, 0.7));
+    }
+
+    .nav-heritage {
+      opacity: 0;
+      animation: navIn 0.8s ease forwards 0.3s;
+    }
+
+    .nav-links li {
+      opacity: 0;
+      animation: navIn 0.8s ease forwards;
+    }
+
+    .nav-links li:nth-child(1) { animation-delay: 0.45s; }
+    .nav-links li:nth-child(2) { animation-delay: 0.55s; }
+    .nav-links li:nth-child(3) { animation-delay: 0.65s; }
+    .nav-links li:nth-child(4) { animation-delay: 0.75s; }
+
+    /* Type the word and the House acknowledges you know it.
+       Four seconds. Then the room is locked again. */
+    .nav-isnad {
+      transition: color 0.6s ease, text-shadow 0.6s ease;
+    }
+
+    .nav-isnad .nav-label-heard { display: none; }
+
+    .nav-isnad.heard {
+      color: rgba(168, 135, 74, 0.92);
+      text-shadow: 0 0 10px rgba(168, 135, 74, 0.35);
+    }
+
+    .nav-isnad.heard .nav-label-default,
+    .nav-isnad.heard .nav-label-hover { display: none !important; }
+    .nav-isnad.heard .nav-label-heard { display: inline; }
+
+    /* Same star, same sky. Offset from the home page so the two never
+       glint in sync — the House is one place, not one loop. */
+    @keyframes starGlint {
+      0%, 92%, 100% {
+        opacity: 0.85;
+        text-shadow: none;
+        transform: scale(1);
+      }
+      95% {
+        opacity: 1;
+        text-shadow: 0 0 8px rgba(168, 135, 74, 0.85), 0 0 18px rgba(168, 135, 74, 0.35);
+        transform: scale(1.12);
+      }
+      98% {
+        opacity: 0.85;
+        text-shadow: none;
+        transform: scale(1);
+      }
     }
 
     /* Begin Heritage — gold-outlined, hover says "Not Yet". */
@@ -248,10 +358,193 @@
       padding-top: 32px;
     }
 
+    /* Footer star keeps its own time — third clock in the House. */
+    .footer-star {
+      display: inline-block;
+      animation: starGlint 11s ease-in-out infinite;
+      animation-delay: 3s;
+    }
+
+    /* ── THE RECORD READS ITSELF OUT ──
+       The page does not arrive as a block. Each line surfaces in order —
+       eyebrow, statement, rule, paragraphs, closing, name. Sequence is the
+       point. Nothing meaningful appears before its moment. */
+    .reveal {
+      opacity: 0;
+      transform: translateY(12px);
+      animation: surface 1.4s ease forwards;
+    }
+
+    @keyframes surface {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    main > .reveal:nth-child(1)  { animation-delay: 0.3s; }
+    main > .reveal:nth-child(2)  { animation-delay: 0.8s; }
+    main > .reveal:nth-child(3)  { animation-delay: 1.5s; }
+    main > .reveal:nth-child(4)  { animation-delay: 1.9s; }
+    main > .reveal:nth-child(6)  { animation-delay: 2.4s; }
+    main > .reveal:nth-child(8)  { animation-delay: 2.9s; }
+    main > .reveal:nth-child(10) { animation-delay: 3.4s; }
+    main > .reveal:nth-child(11) { animation-delay: 4.0s; }
+    main > .reveal:nth-child(12) { animation-delay: 4.6s; }
+    main > .reveal:nth-child(13) { animation-delay: 5.4s; }
+
+    /* The gold rules do not fade in — they are drawn, top to bottom,
+       the way a line is ruled onto a page. This is a record, after all. */
+    .about-rule.reveal {
+      animation-name: drawRule;
+      transform: scaleY(0);
+      transform-origin: top;
+    }
+
+    @keyframes drawRule {
+      from { opacity: 0; transform: scaleY(0); }
+      to   { opacity: 1; transform: scaleY(1); }
+    }
+
+    /* The name arrives last, letters settling closer as it lands —
+       the same gesture as the wordmark at the entrance. One House. */
+    .about-signoff.reveal {
+      animation-name: settleSignoff;
+      animation-duration: 1.8s;
+    }
+
+    @keyframes settleSignoff {
+      from { opacity: 0; transform: translateY(12px); letter-spacing: 0.65em; }
+      to   { opacity: 1; transform: translateY(0); letter-spacing: 0.45em; }
+    }
+
+    /* Once a line has surfaced, it settles — pinned in place, and from
+       then on it can respond to attention instead of ceremony. */
+    .reveal.settled {
+      animation: none;
+      opacity: 1;
+      transform: none;
+    }
+
+    /* Attention brings a line forward. The paragraph under the Guest's
+       eye lifts from 55% to 72% — the rest of the record stays quiet. */
+    .about-body {
+      transition: color 0.6s ease;
+    }
+
+    .about-body:hover {
+      color: rgba(255, 255, 255, 0.72);
+    }
+
+    /* One word in the opening statement knows what it is. Rest on the
+       statement and "record" warms to gold. Nothing is labelled. */
+    .word-record,
+    .word-found {
+      transition: color 1.2s ease;
+    }
+
+    .about-primary:hover .word-record {
+      color: var(--gold);
+    }
+
+    .about-closing:hover .word-found {
+      color: rgba(168, 135, 74, 0.9);
+    }
+
+    /* The settled rules breathe — a very slow brightening and dimming,
+       fourteen seconds to the cycle. Drawn lines, still alive. */
+    .about-rule.settled {
+      animation: ruleBreath 14s ease-in-out infinite;
+    }
+
+    @keyframes ruleBreath {
+      0%, 100% { background-color: rgba(168, 135, 74, 0.4); }
+      50%      { background-color: rgba(168, 135, 74, 0.62); }
+    }
+
+    /* The name responds to the hand — spacing eases open, gold rises. */
+    .about-signoff.settled {
+      transition: letter-spacing 0.8s ease, color 0.8s ease;
+    }
+
+    .about-signoff.settled:hover {
+      letter-spacing: 0.52em;
+      color: rgba(168, 135, 74, 0.95);
+    }
+
+    /* Stillness. Left alone long enough, the closing lines breathe
+       like a candle in still air. Movement in the room stills them. */
+    body.idle .about-closing.settled {
+      animation: candle 9s ease-in-out infinite;
+    }
+
+    @keyframes candle {
+      0%, 100% { opacity: 1; }
+      50%      { opacity: 0.8; }
+    }
+
+    /* ── THE READING RULE ──
+       A single gold hairline at the very top of the page that fills as
+       the Guest moves through the record. The record keeps your place.
+       It only exists when there is somewhere to scroll to. */
+    .reading-rule {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 1px;
+      width: 0;
+      background-color: rgba(168, 135, 74, 0.55);
+      z-index: 120;
+      display: none;
+    }
+
+    /* Rooms do not jump-cut. Doors dim the light before they open. */
+    body.leaving {
+      animation: fadeOut 0.35s ease forwards;
+    }
+
+    @keyframes fadeOut {
+      to { opacity: 0; }
+    }
+
+    /* ── THE LANTERN ──
+       Same light as the entrance. The Guest carries it from room to room. */
+    .lantern {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 50;
+      opacity: 0;
+      transition: opacity 1.2s ease;
+      background: radial-gradient(
+        circle 340px at var(--lx, 50%) var(--ly, 50%),
+        rgba(168, 135, 74, 0.055),
+        rgba(168, 135, 74, 0.018) 45%,
+        transparent 70%
+      );
+      mix-blend-mode: screen;
+    }
+
+    .lantern.lit {
+      opacity: 1;
+    }
+
+    @media (pointer: coarse) {
+      .lantern { display: none; }
+    }
+
     /* ── MOBILE ── */
     @media (max-width: 640px) {
       nav {
         padding: 22px 24px;
+      }
+
+      nav::after {
+        left: 24px;
+        right: 24px;
       }
 
       .nav-left {
@@ -293,21 +586,63 @@
       }
     }
 
-    /* Reduced motion */
+    /* Reduced motion — everything present, everything still */
     @media (prefers-reduced-motion: reduce) {
       body {
         animation: none;
         opacity: 1;
+      }
+      .reveal,
+      .about-rule.reveal,
+      .about-signoff.reveal {
+        animation: none;
+        opacity: 1;
+        transform: none;
+      }
+      .nav-star,
+      .footer-star {
+        animation: none;
+        opacity: 1;
+      }
+      .nav-heritage,
+      .nav-links li {
+        animation: none;
+        opacity: 1;
+      }
+      .about-rule.settled {
+        animation: none;
+      }
+      body.idle .about-closing.settled {
+        animation: none;
+      }
+      .about-signoff.settled,
+      .about-body,
+      .word-record,
+      .word-found {
+        transition: none;
+      }
+      nav::after {
+        transition: none;
+      }
+      .lantern {
+        display: none;
       }
     }
   </style>
 </head>
 <body>
 
+  <!--
+       Even the record has margins.
+       You are reading in them.
+
+       archive@mirzyah.com
+  -->
+
   <!-- NAVIGATION -->
   <nav>
     <div class="nav-left">
-      <a href="index.html" class="nav-star">✦</a>
+      <a href="index.html" class="nav-star" data-door>✦</a>
       <span class="nav-heritage">
         <span class="nav-label-default">Begin Heritage</span>
         <span class="nav-label-hover">Not Yet</span>
@@ -321,9 +656,10 @@
         <span class="nav-label-default">The Vault</span>
         <span class="nav-label-hover">Locked</span>
       </li>
-      <li>
+      <li class="nav-isnad">
         <span class="nav-label-default">Isnad</span>
         <span class="nav-label-hover">Locked</span>
+        <span class="nav-label-heard">Soon.</span>
       </li>
       <li>
         <span class="nav-label-default">Gear</span>
@@ -335,23 +671,23 @@
   <!-- ABOUT CONTENT -->
   <main>
 
-    <p class="about-eyebrow">About</p>
+    <p class="about-eyebrow reveal">About</p>
 
-    <p class="about-primary">
+    <p class="about-primary reveal">
       This is not a brand.<br>
-      This is a record.
+      This is a <span class="word-record">record</span>.
     </p>
 
-    <div class="about-rule"></div>
+    <div class="about-rule reveal"></div>
 
-    <p class="about-body">
+    <p class="about-body reveal">
       Most things are made to be forgotten.<br>
       Worn once. Replaced. Left behind without ceremony.
     </p>
 
     <div class="about-pause"></div>
 
-    <p class="about-body">
+    <p class="about-body reveal">
       Mirzyah was built on a different premise.<br>
       That what you carry says something about who you are.<br>
       That ownership is not a transaction — it is a beginning.
@@ -359,7 +695,7 @@
 
     <div class="about-pause"></div>
 
-    <p class="about-body">
+    <p class="about-body reveal">
       Every piece made here has a birth record.<br>
       A history. A name attached to it.<br>
       Yours, then whoever comes after you.
@@ -367,29 +703,164 @@
 
     <div class="about-pause"></div>
 
-    <p class="about-body">
+    <p class="about-body reveal">
       We do not make things for everyone.<br>
       We make things for the person who understands<br>
       that tension and balance are the same force<br>
       moving in opposite directions.
     </p>
 
-    <div class="about-rule" style="margin-top: 16px;"></div>
+    <div class="about-rule reveal" style="margin-top: 16px;"></div>
 
-    <p class="about-closing">
+    <p class="about-closing reveal">
       The rest is not ready to be seen yet.<br>
       But the door is open.<br>
-      You found it.
+      <span class="word-found">You found it.</span>
     </p>
 
-    <p class="about-signoff">Mirzyah</p>
+    <p class="about-signoff reveal">Mirzyah</p>
 
   </main>
 
   <!-- FOOTER -->
   <footer>
-    ✦ &nbsp;·&nbsp; Ontario, Canada &nbsp;·&nbsp; Est. 2026 &nbsp;·&nbsp; mirzyah.com
+    <span class="footer-star">✦</span> &nbsp;·&nbsp; Ontario, Canada &nbsp;·&nbsp; Est. 2026 &nbsp;·&nbsp; mirzyah.com
   </footer>
+
+  <!-- THE READING RULE — the record keeps your place. -->
+  <div class="reading-rule" id="readingRule" aria-hidden="true"></div>
+
+  <!-- THE LANTERN — the Guest carries the same light from room to room. -->
+  <div class="lantern" id="lantern" aria-hidden="true"></div>
+
+  <script>
+    // When the Guest steps away, the tab holds the mark, and waits.
+    (function () {
+      var homeTitle = document.title;
+      document.addEventListener('visibilitychange', function () {
+        document.title = document.hidden ? '\u2726' : homeTitle;
+      });
+    })();
+
+    // Once each line has surfaced, it settles — pinned, and touchable.
+    (function () {
+      document.querySelectorAll('.reveal').forEach(function (el) {
+        el.addEventListener('animationend', function () {
+          el.classList.add('settled');
+        });
+      });
+    })();
+
+    // If a Guest types the word, the House acknowledges they know it.
+    (function () {
+      var buf = '';
+      document.addEventListener('keydown', function (e) {
+        if (!e.key || e.key.length !== 1) return;
+        buf = (buf + e.key.toLowerCase()).slice(-5);
+        if (buf === 'isnad') {
+          buf = '';
+          var el = document.querySelector('.nav-isnad');
+          if (el && !el.classList.contains('heard')) {
+            el.classList.add('heard');
+            setTimeout(function () { el.classList.remove('heard'); }, 4000);
+          }
+        }
+      });
+    })();
+
+    // Rooms do not jump-cut. Doors dim the light before they open.
+    (function () {
+      var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      document.querySelectorAll('a[data-door]').forEach(function (a) {
+        a.addEventListener('click', function (e) {
+          if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
+          e.preventDefault();
+          var href = a.getAttribute('href');
+          if (reduce) { location.href = href; return; }
+          document.body.classList.add('leaving');
+          setTimeout(function () { location.href = href; }, 360);
+        });
+      });
+    })();
+
+    // The record keeps your place — a gold hairline that fills as the
+    // Guest moves through the page. Only exists when there is somewhere
+    // to move to.
+    (function () {
+      var rule = document.getElementById('readingRule');
+      if (!rule) return;
+      function upd() {
+        var d = document.documentElement;
+        var max = d.scrollHeight - d.clientHeight;
+        if (max <= 4) {
+          rule.style.display = 'none';
+          return;
+        }
+        rule.style.display = 'block';
+        var y = window.scrollY || d.scrollTop || 0;
+        rule.style.width = (y / max * 100) + '%';
+      }
+      window.addEventListener('scroll', upd, { passive: true });
+      window.addEventListener('resize', upd);
+      upd();
+    })();
+
+    // The carried flame, and the room's awareness of stillness.
+    (function () {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+      var lantern = document.getElementById('lantern');
+
+      var tx = -1000, ty = -1000;
+      var x = tx, y = ty;
+      var lit = false;
+      var raf = null;
+
+      function frame() {
+        x += (tx - x) * 0.08;
+        y += (ty - y) * 0.08;
+        if (lantern) {
+          lantern.style.setProperty('--lx', x + 'px');
+          lantern.style.setProperty('--ly', y + 'px');
+        }
+        if (Math.abs(tx - x) > 0.3 || Math.abs(ty - y) > 0.3) {
+          raf = requestAnimationFrame(frame);
+        } else {
+          raf = null;
+        }
+      }
+
+      document.addEventListener('mousemove', function (e) {
+        tx = e.clientX;
+        ty = e.clientY;
+        if (!lit && lantern) {
+          x = tx; y = ty;
+          lantern.classList.add('lit');
+          lit = true;
+        }
+        if (!raf) raf = requestAnimationFrame(frame);
+      }, { passive: true });
+
+      document.addEventListener('mouseleave', function () {
+        if (lantern) lantern.classList.remove('lit');
+        lit = false;
+      });
+
+      // Stillness wakes the candle; movement stills it.
+      var idleT;
+      function wake() {
+        document.body.classList.remove('idle');
+        clearTimeout(idleT);
+        idleT = setTimeout(function () {
+          document.body.classList.add('idle');
+        }, 45000);
+      }
+      ['mousemove', 'keydown', 'touchstart', 'scroll'].forEach(function (ev) {
+        document.addEventListener(ev, wake, { passive: true });
+      });
+      wake();
+    })();
+  </script>
 
 </body>
 </html>

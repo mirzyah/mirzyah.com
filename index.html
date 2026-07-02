@@ -5,6 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>MIRZYAH</title>
   <meta name="description" content="We are just the inn." />
+  <meta name="theme-color" content="#080808" />
+  <meta property="og:title" content="MIRZYAH" />
+  <meta property="og:description" content="We are just the inn." />
+  <meta property="og:url" content="https://mirzyah.com" />
+  <meta property="og:type" content="website" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Crect width='200' height='200' fill='%23080808'/%3E%3Ccircle cx='100' cy='100' r='82' fill='%23A8874A'/%3E%3Ccircle cx='114' cy='100' r='82' fill='%23080808'/%3E%3Ctext x='116' y='128' text-anchor='middle' font-family='Georgia,serif' font-size='78' fill='%23A8874A'%3EM%3C/text%3E%3C/svg%3E" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Poppins:wght@300&display=swap" rel="stylesheet" />
@@ -43,6 +49,18 @@
       to { opacity: 1; }
     }
 
+    /* Even the act of selecting text belongs to the House. */
+    ::selection {
+      background-color: rgba(168, 135, 74, 0.85);
+      color: #080808;
+    }
+
+    /* Keyboard Guests are Guests. The focus ring is the House gold. */
+    a:focus-visible {
+      outline: 1px solid rgba(168, 135, 74, 0.65);
+      outline-offset: 4px;
+    }
+
     /* ── NAVIGATION ── */
     nav {
       position: fixed;
@@ -54,6 +72,37 @@
       align-items: center;
       justify-content: space-between;
       padding: 28px 48px;
+      /* The nav sits on its own plane — a faint scrim, and a hairline of
+         gold beneath it that warms when the Guest's attention arrives. */
+      background: linear-gradient(to bottom, rgba(8, 8, 8, 0.92), rgba(8, 8, 8, 0));
+    }
+
+    nav::after {
+      content: '';
+      position: absolute;
+      left: 48px;
+      right: 48px;
+      bottom: 0;
+      height: 1px;
+      background: linear-gradient(to right, transparent, rgba(168, 135, 74, 0.32), transparent);
+      opacity: 0.4;
+      transition: opacity 0.6s ease;
+    }
+
+    nav:hover::after {
+      opacity: 0.9;
+    }
+
+    /* The nav arrives the way the hero does — star first, then the
+       entrance, then the rooms, left to right. Quick, but in order. */
+    @keyframes navIn {
+      from { opacity: 0; transform: translateY(-6px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes navInStar {
+      from { opacity: 0; }
+      to   { opacity: 0.85; }
     }
 
     /* Left cluster — star + the Guest's future entrance, held apart from the
@@ -69,6 +118,44 @@
       color: #A8874A;
       user-select: none;
       line-height: 1;
+      display: inline-block;
+      opacity: 0;
+      animation: navInStar 0.8s ease forwards 0.15s,
+                 starGlint 11s ease-in-out infinite 4s;
+    }
+
+    /* Touch the star and it answers — one glint, on demand.
+       Ambient rhythm resumes after. */
+    .nav-star.answer {
+      animation: starAnswer 0.9s ease;
+      opacity: 0.85;
+    }
+
+    @keyframes starAnswer {
+      0%   { opacity: 0.85; transform: scale(1); text-shadow: none; }
+      40%  { opacity: 1; transform: scale(1.2); text-shadow: 0 0 10px rgba(168, 135, 74, 0.9), 0 0 22px rgba(168, 135, 74, 0.4); }
+      100% { opacity: 0.85; transform: scale(1); text-shadow: none; }
+    }
+
+    /* The star is still almost always. Roughly once every eleven seconds it
+       catches light for under a second — easy to miss unless you happen to
+       be watching. A star, not a notification. */
+    @keyframes starGlint {
+      0%, 92%, 100% {
+        opacity: 0.85;
+        text-shadow: none;
+        transform: scale(1);
+      }
+      95% {
+        opacity: 1;
+        text-shadow: 0 0 8px rgba(168, 135, 74, 0.85), 0 0 18px rgba(168, 135, 74, 0.35);
+        transform: scale(1.12);
+      }
+      98% {
+        opacity: 0.85;
+        text-shadow: none;
+        transform: scale(1);
+      }
     }
 
     /* Begin Heritage — same nav theme, but hover says "Not Yet", not "Locked". */
@@ -102,6 +189,39 @@
     .nav-heritage .nav-label-hover { display: none; }
     .nav-heritage:hover .nav-label-default { display: none; }
     .nav-heritage:hover .nav-label-hover { display: inline; }
+
+    .nav-heritage {
+      opacity: 0;
+      animation: navIn 0.8s ease forwards 0.3s;
+    }
+
+    .nav-links li {
+      opacity: 0;
+      animation: navIn 0.8s ease forwards;
+    }
+
+    .nav-links li:nth-child(1) { animation-delay: 0.45s; }
+    .nav-links li:nth-child(2) { animation-delay: 0.55s; }
+    .nav-links li:nth-child(3) { animation-delay: 0.65s; }
+    .nav-links li:nth-child(4) { animation-delay: 0.75s; }
+
+    /* If a Guest types the word — anywhere, unprompted — the House
+       acknowledges that they know it. Four seconds. Then the room
+       is locked again. Understanding is earned, not explained. */
+    .nav-isnad {
+      transition: color 0.6s ease, text-shadow 0.6s ease;
+    }
+
+    .nav-isnad .nav-label-heard { display: none; }
+
+    .nav-isnad.heard {
+      color: rgba(168, 135, 74, 0.92);
+      text-shadow: 0 0 10px rgba(168, 135, 74, 0.35);
+    }
+
+    .nav-isnad.heard .nav-label-default,
+    .nav-isnad.heard .nav-label-hover { display: none !important; }
+    .nav-isnad.heard .nav-label-heard { display: inline; }
 
     .nav-links {
       display: flex;
@@ -168,6 +288,18 @@
       height: auto;
       display: block;
       margin: 0 auto;
+      opacity: 0;
+      animation: arriveMark 1.6s ease forwards 0.3s;
+    }
+
+    /* ── THE ENTRANCE ──
+       Nothing appears at once. The mark first. Then the name settles into
+       place — its letters drawing slightly closer as they arrive, like a
+       word finding its final position. Then the divider draws itself.
+       Then, last, the invitation. Sequence is the point. */
+    @keyframes arriveMark {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
     }
 
     /* ── CRESCENT MOON ──
@@ -185,6 +317,15 @@
       transform: translateX(24px);
     }
 
+    .moon-halo {
+      opacity: 0;
+      transition: opacity 1.4s ease;
+    }
+
+    .logo-mark:hover .moon-halo {
+      opacity: 0.32;
+    }
+
     .wordmark {
       margin-top: 28px;
       font-family: 'Poppins', sans-serif;
@@ -195,6 +336,37 @@
       text-transform: uppercase;
       /* Compensate for letter-spacing on last character */
       text-indent: 0.55em;
+      opacity: 0;
+      animation: settleWordmark 1.8s cubic-bezier(0.25, 0.1, 0.25, 1) forwards 1.0s;
+    }
+
+    @keyframes settleWordmark {
+      from { opacity: 0; letter-spacing: 0.78em; }
+      to   { opacity: 1; letter-spacing: 0.55em; }
+    }
+
+    /* Once the name has settled, it becomes touchable — hover and the
+       letters ease apart, breathing. Leave and they draw back together. */
+    .wordmark.settled {
+      animation: none;
+      opacity: 1;
+      transition: letter-spacing 0.9s ease;
+    }
+
+    .wordmark.settled:hover {
+      letter-spacing: 0.62em;
+    }
+
+    /* If the room is left alone — no hand, no key, no touch — for
+       forty-five seconds, the name begins to breathe like a candle in
+       still air. Any movement in the room stills it again. */
+    body.idle .wordmark.settled {
+      animation: candle 8s ease-in-out infinite;
+    }
+
+    @keyframes candle {
+      0%, 100% { opacity: 1; }
+      50%      { opacity: 0.82; }
     }
 
     .divider {
@@ -202,6 +374,13 @@
       width: 1px;
       height: 40px;
       background-color: rgba(255, 255, 255, 0.14);
+      transform: scaleY(0);
+      transform-origin: top;
+      animation: drawDivider 1.2s ease forwards 2.2s;
+    }
+
+    @keyframes drawDivider {
+      to { transform: scaleY(1); }
     }
 
     .cta-label {
@@ -213,6 +392,12 @@
       text-transform: uppercase;
       text-indent: 0.32em;
       margin-bottom: 10px;
+      opacity: 0;
+      animation: arriveSoft 1.4s ease forwards 2.9s;
+    }
+
+    @keyframes arriveSoft {
+      to { opacity: 1; }
     }
 
     .cta-email {
@@ -223,14 +408,40 @@
       color: rgba(255, 255, 255, 0.68);
       text-decoration: none;
       text-transform: lowercase;
-      border-bottom: 1px solid transparent;
-      transition: border-color 0.2s ease, color 0.2s ease;
+      position: relative;
+      padding-bottom: 2px;
+      transition: color 0.2s ease;
+      opacity: 0;
+      animation: arriveSoft 1.4s ease forwards 3.2s;
+    }
+
+    /* The underline is drawn, not switched on — from the center outward,
+       the way a door opens from its middle. */
+    .cta-email::after {
+      content: '';
+      position: absolute;
+      left: 50%;
+      bottom: 0;
+      width: 0;
+      height: 1px;
+      background-color: rgba(168, 135, 74, 0.55);
+      transform: translateX(-50%);
+      transition: width 0.45s ease;
     }
 
     .cta-email:hover {
       color: rgba(255, 255, 255, 0.90);
-      border-bottom-color: rgba(255, 255, 255, 0.28);
     }
+
+    .cta-email:hover::after {
+      width: 100%;
+    }
+
+    /* While the Guest's hand rests on the address, the invitation
+       answers: We read everything. It is true. Witness protocol. */
+    .cta-label .cta-alt { display: none; }
+    .cta-label.hearing .cta-default { display: none; }
+    .cta-label.hearing .cta-alt { display: inline; }
 
     /* ── FOOTER ── */
     footer {
@@ -250,10 +461,74 @@
       user-select: none;
     }
 
+    /* The footer star keeps its own time — never in sync with the nav star.
+       Two stars, one sky, different moments. */
+    .footer-star {
+      display: inline-block;
+      animation: starGlint 11s ease-in-out infinite;
+      animation-delay: 8.5s;
+    }
+
+    /* The footer is faint until looked at. Attention brightens it —
+       nothing on this page performs for a Guest who isn't watching. */
+    footer {
+      transition: color 0.5s ease;
+    }
+
+    footer:hover {
+      color: rgba(255, 255, 255, 0.36);
+    }
+
+    /* Rooms do not jump-cut. Leaving through a door dims the light first. */
+    body.leaving {
+      animation: fadeOut 0.35s ease forwards;
+    }
+
+    @keyframes fadeOut {
+      to { opacity: 0; }
+    }
+
+    /* ── THE LANTERN ──
+       A faint warm light that follows the cursor with a slight lag, as though
+       the Guest carries a candle through a dark house. It illuminates nothing
+       in particular — attention itself is the light source. Desktop pointers
+       only; it does not exist on touch devices. */
+    .lantern {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 50;
+      opacity: 0;
+      transition: opacity 1.2s ease;
+      background: radial-gradient(
+        circle 340px at var(--lx, 50%) var(--ly, 50%),
+        rgba(168, 135, 74, 0.055),
+        rgba(168, 135, 74, 0.018) 45%,
+        transparent 70%
+      );
+      mix-blend-mode: screen;
+    }
+
+    .lantern.lit {
+      opacity: 1;
+    }
+
+    @media (pointer: coarse) {
+      .lantern { display: none; }
+    }
+
     /* ── MOBILE ── */
     @media (max-width: 640px) {
       nav {
         padding: 22px 24px;
+      }
+
+      nav::after {
+        left: 24px;
+        right: 24px;
       }
 
       .nav-left {
@@ -294,7 +569,7 @@
       }
     }
 
-    /* Reduced motion — hold a static thin crescent, no waxing on hover */
+    /* Reduced motion — everything present, everything still */
     @media (prefers-reduced-motion: reduce) {
       body {
         animation: none;
@@ -306,15 +581,64 @@
       .logo-mark:hover .moon-occluder {
         transform: translateX(14px);
       }
+      .nav-star,
+      .footer-star {
+        animation: none;
+        opacity: 1;
+      }
+      .nav-heritage,
+      .nav-links li {
+        animation: none;
+        opacity: 1;
+      }
+      .nav-star.answer {
+        animation: none;
+      }
+      .moon-halo {
+        transition: none;
+      }
+      .wordmark.settled {
+        transition: none;
+      }
+      body.idle .wordmark.settled {
+        animation: none;
+      }
+      nav::after {
+        transition: none;
+      }
+      .lantern {
+        display: none;
+      }
+      .logo-mark,
+      .wordmark,
+      .cta-label,
+      .cta-email {
+        animation: none;
+        opacity: 1;
+      }
+      .divider {
+        animation: none;
+        transform: scaleY(1);
+      }
+      .cta-email::after {
+        transition: none;
+      }
     }
   </style>
 </head>
 <body>
 
+  <!--
+       Most Guests read the room.
+       You read the walls.
+
+       archive@mirzyah.com — tell us you found this.
+  -->
+
   <!-- NAVIGATION -->
   <nav>
     <div class="nav-left">
-      <span class="nav-star">✦</span>
+      <span class="nav-star" id="navStar">✦</span>
       <span class="nav-heritage">
         <span class="nav-label-default">Begin Heritage</span>
         <span class="nav-label-hover">Not Yet</span>
@@ -322,15 +646,16 @@
     </div>
     <ul class="nav-links">
       <li class="nav-link">
-        <a href="about.html">About</a>
+        <a href="about.html" data-door>About</a>
       </li>
       <li>
         <span class="nav-label-default">The Vault</span>
         <span class="nav-label-hover">Locked</span>
       </li>
-      <li>
+      <li class="nav-isnad">
         <span class="nav-label-default">Isnad</span>
         <span class="nav-label-hover">Locked</span>
+        <span class="nav-label-heard">Soon.</span>
       </li>
       <li>
         <span class="nav-label-default">Gear</span>
@@ -354,6 +679,17 @@
       aria-label="Mirzyah Crescented M mark"
       role="img"
     >
+      <!-- A soft gold halo behind the moon — invisible until the Guest's
+           attention arrives, then blooming slowly, like light behind cloud. -->
+      <defs>
+        <radialGradient id="haloGrad" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#A8874A" stop-opacity="0.5" />
+          <stop offset="55%" stop-color="#A8874A" stop-opacity="0.18" />
+          <stop offset="100%" stop-color="#A8874A" stop-opacity="0" />
+        </radialGradient>
+      </defs>
+      <circle class="moon-halo" cx="100" cy="100" r="98" fill="url(#haloGrad)" />
+
       <!-- The lit disk -->
       <circle cx="100" cy="100" r="82" fill="#A8874A" />
 
@@ -385,7 +721,7 @@
         opacity="0"
       >
         <animateMotion
-          begin="hit.mouseover"
+          begin="hit.mouseover; hit.click"
           dur="1.8s"
           fill="remove"
           restart="whenNotActive"
@@ -396,7 +732,7 @@
           path="M148,172 C180,150 180,50 148,28" />
         <animate
           attributeName="opacity"
-          begin="hit.mouseover"
+          begin="hit.mouseover; hit.click"
           dur="1.8s"
           values="0;1;1;0"
           keyTimes="0;0.18;0.72;1"
@@ -413,15 +749,174 @@
 
     <div class="divider"></div>
 
-    <p class="cta-label">Write to us</p>
-    <a class="cta-email" href="mailto:archive@mirzyah.com">archive@mirzyah.com</a>
+    <p class="cta-label" id="ctaLabel"><span class="cta-default">Write to us</span><span class="cta-alt">We read everything.</span></p>
+    <a class="cta-email" id="ctaEmail" href="mailto:archive@mirzyah.com">archive@mirzyah.com</a>
 
   </main>
 
   <!-- FOOTER -->
   <footer>
-    ✦ &nbsp;·&nbsp; Ontario, Canada &nbsp;·&nbsp; Est. 2026 &nbsp;·&nbsp; mirzyah.com
+    <span class="footer-star">✦</span> &nbsp;·&nbsp; Ontario, Canada &nbsp;·&nbsp; Est. 2026 &nbsp;·&nbsp; mirzyah.com
   </footer>
+
+  <!-- THE LANTERN — lives above the page, beneath nothing. -->
+  <div class="lantern" id="lantern" aria-hidden="true"></div>
+
+  <script>
+    // When the Guest steps away, the House does not call after them.
+    // The tab simply holds the mark, and waits.
+    (function () {
+      var homeTitle = document.title;
+      document.addEventListener('visibilitychange', function () {
+        document.title = document.hidden ? '\u2726' : homeTitle;
+      });
+    })();
+
+    // Once entrance animations finish, elements settle — becoming
+    // touchable, so hover and idle behaviors can take over from ceremony.
+    (function () {
+      var wm = document.querySelector('.wordmark');
+      if (wm) wm.addEventListener('animationend', function () {
+        wm.classList.add('settled');
+      });
+    })();
+
+    // The star answers when touched. One glint, then its own time again.
+    (function () {
+      var star = document.getElementById('navStar');
+      if (!star) return;
+      star.addEventListener('click', function () {
+        if (star.classList.contains('answer')) return;
+        star.classList.add('answer');
+        star.addEventListener('animationend', function h(ev) {
+          if (ev.animationName === 'starAnswer') {
+            star.classList.remove('answer');
+            star.removeEventListener('animationend', h);
+          }
+        });
+      });
+    })();
+
+    // While the hand rests on the address, the invitation answers.
+    (function () {
+      var label = document.getElementById('ctaLabel');
+      var email = document.getElementById('ctaEmail');
+      if (!label || !email) return;
+      function on()  { label.classList.add('hearing'); }
+      function off() { label.classList.remove('hearing'); }
+      email.addEventListener('mouseenter', on);
+      email.addEventListener('mouseleave', off);
+      email.addEventListener('focus', on);
+      email.addEventListener('blur', off);
+    })();
+
+    // If a Guest types the word, the House acknowledges they know it.
+    (function () {
+      var buf = '';
+      document.addEventListener('keydown', function (e) {
+        if (!e.key || e.key.length !== 1) return;
+        buf = (buf + e.key.toLowerCase()).slice(-5);
+        if (buf === 'isnad') {
+          buf = '';
+          var el = document.querySelector('.nav-isnad');
+          if (el && !el.classList.contains('heard')) {
+            el.classList.add('heard');
+            setTimeout(function () { el.classList.remove('heard'); }, 4000);
+          }
+        }
+      });
+    })();
+
+    // Rooms do not jump-cut. Doors dim the light before they open.
+    (function () {
+      var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      document.querySelectorAll('a[data-door]').forEach(function (a) {
+        a.addEventListener('click', function (e) {
+          if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
+          e.preventDefault();
+          var href = a.getAttribute('href');
+          if (reduce) { location.href = href; return; }
+          document.body.classList.add('leaving');
+          setTimeout(function () { location.href = href; }, 360);
+        });
+      });
+    })();
+
+    // The light trails slightly behind the hand. A carried flame, not a
+    // cursor. The moon also leans, very slightly, toward attention —
+    // and the room notices stillness: leave it alone long enough and
+    // the name begins to breathe.
+    (function () {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+      var lantern = document.getElementById('lantern');
+      var mark = document.getElementById('logoMark');
+
+      var tx = -1000, ty = -1000; // lantern target
+      var x = tx, y = ty;         // lantern current
+      var mtx = 0, mty = 0;       // lean target
+      var mx = 0, my = 0;         // lean current
+      var lit = false;
+      var raf = null;
+
+      function frame() {
+        x += (tx - x) * 0.08;
+        y += (ty - y) * 0.08;
+        mx += (mtx - mx) * 0.05;
+        my += (mty - my) * 0.05;
+        if (lantern) {
+          lantern.style.setProperty('--lx', x + 'px');
+          lantern.style.setProperty('--ly', y + 'px');
+        }
+        if (mark) {
+          mark.style.transform = 'translate(' + mx.toFixed(2) + 'px,' + my.toFixed(2) + 'px)';
+        }
+        if (Math.abs(tx - x) > 0.3 || Math.abs(ty - y) > 0.3 ||
+            Math.abs(mtx - mx) > 0.05 || Math.abs(mty - my) > 0.05) {
+          raf = requestAnimationFrame(frame);
+        } else {
+          raf = null;
+        }
+      }
+
+      function clamp(v, m) { return Math.max(-m, Math.min(m, v)); }
+
+      document.addEventListener('mousemove', function (e) {
+        tx = e.clientX;
+        ty = e.clientY;
+        mtx = clamp((e.clientX - window.innerWidth / 2) / window.innerWidth * 10, 4);
+        mty = clamp((e.clientY - window.innerHeight / 2) / window.innerHeight * 10, 4);
+        if (!lit && lantern) {
+          x = tx; y = ty;
+          lantern.classList.add('lit');
+          lit = true;
+        }
+        if (!raf) raf = requestAnimationFrame(frame);
+      }, { passive: true });
+
+      document.addEventListener('mouseleave', function () {
+        if (lantern) lantern.classList.remove('lit');
+        lit = false;
+        mtx = 0; mty = 0;
+        if (!raf) raf = requestAnimationFrame(frame);
+      });
+
+      // Stillness. Forty-five seconds without a hand, a key, or a touch,
+      // and the candle stirs. Any movement in the room stills it.
+      var idleT;
+      function wake() {
+        document.body.classList.remove('idle');
+        clearTimeout(idleT);
+        idleT = setTimeout(function () {
+          document.body.classList.add('idle');
+        }, 45000);
+      }
+      ['mousemove', 'keydown', 'touchstart', 'scroll'].forEach(function (ev) {
+        document.addEventListener(ev, wake, { passive: true });
+      });
+      wake();
+    })();
+  </script>
 
 </body>
 </html>
